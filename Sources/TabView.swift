@@ -46,7 +46,16 @@ internal class TabView: UIView {
         Bundle(for: TabView.self).loadNibNamed("TabView", owner: self, options: nil)
         addSubview(contentView)
         contentView.backgroundColor = option.tabBackgroundColor.withAlphaComponent(option.tabBarAlpha)
-
+        contentView.layer.masksToBounds = true
+        let path = UIBezierPath(roundedRect:CGRect(x: contentView.bounds.origin.x, y: contentView.bounds.origin.y, width: UIScreen.main.bounds.width, height: contentView.bounds.size.height),
+                                byRoundingCorners:[.topRight, .topLeft],
+                                cornerRadii: CGSize(width: 10, height:  10))
+        
+        let maskLayer = CAShapeLayer()
+        
+        maskLayer.path = path.cgPath
+        contentView.layer.mask = maskLayer
+        
         let top = NSLayoutConstraint(item: contentView,
             attribute: .top,
             relatedBy: .equal,
