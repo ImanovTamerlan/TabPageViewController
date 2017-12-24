@@ -25,8 +25,15 @@ class InfiniteTabPageViewController: TabPageViewController {
         vc5.view.backgroundColor = UIColor(red: 252/255, green: 182/255, blue: 106/255, alpha: 1.0)
         tabItems = [(vc1, "Mon."), (vc2, "Tue."), (vc3, "Wed."), (vc4, "Thu."), (vc5, "Fri.")]
         isInfinity = true
-        option.currentColor = UIColor(red: 246/255, green: 175/255, blue: 32/255, alpha: 1.0)
-        option.tabMargin = 30.0
+        option.currentColor = UIColor(red: 250/255, green: 175/255, blue: 72/255, alpha: 1)
+        option.defaultColor = UIColor(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
+        option.currentFont = UIFont(name: "SanFranciscoDisplay-Bold", size: 15.5) ?? UIFont.systemFont(ofSize: 15.5)
+        option.defaultFont = UIFont(name: "SanFranciscoDisplay-Bold", size: 12) ?? UIFont.systemFont(ofSize: 12)
+        option.borderColor = UIColor(red: 250/255, green: 175/255, blue: 72/255, alpha: 1)
+        option.currentBarHeight = 0
+        option.tabHeight = 50
+        option.cornerRadius = 20
+        option.tabMargin = 10
     }
 
     required init?(coder aDecoder: NSCoder) {

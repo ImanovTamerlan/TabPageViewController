@@ -8,9 +8,31 @@
 
 import UIKit
 
+class PaddingLabel: UILabel {
+    
+    @IBInspectable var topInset: CGFloat = 8.0
+    @IBInspectable var bottomInset: CGFloat = 8.0
+    @IBInspectable var leftInset: CGFloat = 8.0
+    @IBInspectable var rightInset: CGFloat = 8.0
+    
+    override open func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
+    }
+    
+    override open var intrinsicContentSize: CGSize {
+        get {
+            var contentSize = super.intrinsicContentSize
+            contentSize.height += topInset + bottomInset
+            contentSize.width += leftInset + rightInset
+            return contentSize
+        }
+    }
+}
+
 class TabCollectionCell: UICollectionViewCell {
 
-    var tabItemButtonPressedBlock: ((Void) -> Void)?
+    var tabItemButtonPressedBlock: (() -> Void)?
     var option: TabPageOption = TabPageOption() {
         didSet {
             currentBarViewHeightConstraint.constant = option.currentBarHeight
@@ -36,7 +58,7 @@ class TabCollectionCell: UICollectionViewCell {
         }
     }
 
-    @IBOutlet fileprivate weak var itemLabel: UILabel!
+    @IBOutlet fileprivate weak var itemLabel: PaddingLabel!
     @IBOutlet fileprivate weak var currentBarView: UIView!
     @IBOutlet fileprivate weak var currentBarViewHeightConstraint: NSLayoutConstraint!
 
@@ -85,12 +107,19 @@ extension TabCollectionCell {
 
     func highlightTitle() {
         itemLabel.textColor = option.currentColor
-        itemLabel.font = UIFont.boldSystemFont(ofSize: option.fontSize)
+        itemLabel.font = option.currentFont
+        if let radius = option.cornerRadius, let color = option.borderColor {
+            itemLabel.layer.masksToBounds = true
+            itemLabel.layer.cornerRadius = radius
+            itemLabel.layer.borderColor = color.cgColor
+            itemLabel.layer.borderWidth = 2
+        }
     }
-
+    
     func unHighlightTitle() {
         itemLabel.textColor = option.defaultColor
-        itemLabel.font = UIFont.systemFont(ofSize: option.fontSize)
+        itemLabel.font = option.defaultFont
+        itemLabel.layer.borderWidth = 0
     }
 }
 

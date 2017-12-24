@@ -322,7 +322,7 @@ extension TabView: UICollectionViewDataSource {
                 self?.updateCollectionViewUserInteractionEnabled(false)
             }
             self?.updateCurrentIndexForTap(indexPath.item)
-        }
+        } as (() -> Void)
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -386,14 +386,14 @@ extension TabView: UICollectionViewDelegateFlowLayout {
 
     internal func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        if let size = cachedCellSizes[indexPath] {
-            return size
-        }
+//        if let size = cachedCellSizes[indexPath] {
+//            return size
+//        }
 
         configureCell(cellForSize, indexPath: indexPath)
 
         let size = cellForSize.sizeThatFits(CGSize(width: collectionView.bounds.width, height: option.tabHeight))
-        cachedCellSizes[indexPath] = size
+//        cachedCellSizes[indexPath] = size
 
         return size
     }
